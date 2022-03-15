@@ -1,25 +1,25 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x50D75C1BC6a1cE35002C9f92D0AF4B3684aa6B74",
-    "txHash": "0xb5d6600479f4dcf117e01e2052ae75d63dce6d5673f2b7b003e41cc04cb21c30"
+    "address": "0x39E79534F5522F5D9022Fe8a4A7a815AcC187D5c",
+    "txHash": "0xf5c7e6315873bb76258f6a8d13b9f3567a7513c40f00934dc34912ef065e20fe"
   },
   "proxies": [
     {
-      "address": "0xD2E8d9173584D4DaA5C8354a79eF75ceC2dfa228",
-      "txHash": "0x487e5d092d4c0a1092551b3ca23b2a808834b3ed0ccf17a513a0112d3cb86c5f",
+      "address": "0x7443BDa5e020EE67602852c72Ce1330FC3dD9D4d",
+      "txHash": "0x10e3aa3517588edc6462d560791840a2f7681770d29182f70e0f2cb1677dce33",
       "kind": "transparent"
     },
     {
-      "address": "0x56F7DC1Cc938d6d6575B68d70d381F9C28C8C7b7",
-      "txHash": "0xee9e20cbb2c5df78584abc1fdfdae1548428babfac046d8e0396ee2518b5d698",
+      "address": "0xE28B245C4B12CD3b561B8ADA9aB5D8FD1FdDa00c",
+      "txHash": "0xc35287aa527a43e760b1d3ed4d7ab05403b38cd5c24626db38eeebe6fa5d0de9",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "1dcc96528fe887c5240cad20192b1021ece4c5daa5f9ebfe2fc862df32d4563b": {
-      "address": "0x668eD30aAcC7C7c206aAF1327d733226416233E2",
-      "txHash": "0x28b3de08e380ad95794e70944a7bc7a6074d06bf06d47a064615e3c9e01e8102",
+    "b2afb2b7415b6ca51077c2ab2865ed8636825ccb73af82e2223f762e9bbc46f6": {
+      "address": "0xb88CceE76Da9b5A49f498495eF615C02Db639D1d",
+      "txHash": "0xbec920b0ca116f671c05ad8216a35eb02d39fa8a3eafb08f53d50d4d36115819",
       "layout": {
         "storage": [
           {
@@ -119,17 +119,9 @@
             "src": "contracts\\ERC721AUpgradeable.sol:98"
           },
           {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "109",
-            "type": "t_array(t_uint256)42_storage",
-            "contract": "ERC721AUpgradeable",
-            "src": "contracts\\ERC721AUpgradeable.sol:653"
-          },
-          {
             "label": "_owner",
             "offset": 0,
-            "slot": "151",
+            "slot": "109",
             "type": "t_address",
             "contract": "OwnableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
@@ -137,106 +129,103 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "152",
+            "slot": "110",
             "type": "t_array(t_uint256)49_storage",
             "contract": "OwnableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
           },
           {
-            "label": "signer",
+            "label": "presaleMinted",
             "offset": 0,
-            "slot": "201",
-            "type": "t_address",
-            "contract": "TestERC721",
-            "src": "contracts\\TestERC721.sol:21"
-          },
-          {
-            "label": "payoutAddress",
-            "offset": 0,
-            "slot": "202",
-            "type": "t_address",
-            "contract": "TestERC721",
-            "src": "contracts\\TestERC721.sol:22"
-          },
-          {
-            "label": "royaltyAddress",
-            "offset": 0,
-            "slot": "203",
-            "type": "t_address",
+            "slot": "159",
+            "type": "t_mapping(t_address,t_uint256)",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:23"
           },
           {
-            "label": "testStaking",
+            "label": "signer",
             "offset": 0,
-            "slot": "204",
+            "slot": "160",
             "type": "t_address",
             "contract": "TestERC721",
-            "src": "contracts\\TestERC721.sol:24"
+            "src": "contracts\\TestERC721.sol:25"
           },
           {
-            "label": "reserveAmountMinted",
+            "label": "payoutAddress",
             "offset": 0,
-            "slot": "205",
-            "type": "t_uint256",
+            "slot": "161",
+            "type": "t_address",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:26"
           },
           {
-            "label": "plPlusActive",
+            "label": "testStaking",
             "offset": 0,
-            "slot": "206",
-            "type": "t_bool",
+            "slot": "162",
+            "type": "t_address",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:27"
           },
           {
-            "label": "presaleActive",
-            "offset": 1,
-            "slot": "206",
-            "type": "t_bool",
-            "contract": "TestERC721",
-            "src": "contracts\\TestERC721.sol:28"
-          },
-          {
-            "label": "saleActive",
-            "offset": 2,
-            "slot": "206",
-            "type": "t_bool",
+            "label": "reserveAmountMinted",
+            "offset": 0,
+            "slot": "163",
+            "type": "t_uint256",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:29"
           },
           {
-            "label": "revealed",
-            "offset": 3,
-            "slot": "206",
+            "label": "phPlusActive",
+            "offset": 0,
+            "slot": "164",
             "type": "t_bool",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:30"
           },
           {
-            "label": "baseURI",
-            "offset": 0,
-            "slot": "207",
-            "type": "t_string_storage",
+            "label": "presaleActive",
+            "offset": 1,
+            "slot": "164",
+            "type": "t_bool",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:31"
           },
           {
-            "label": "royaltyBasisPoints",
-            "offset": 0,
-            "slot": "208",
-            "type": "t_uint96",
+            "label": "saleActive",
+            "offset": 2,
+            "slot": "164",
+            "type": "t_bool",
+            "contract": "TestERC721",
+            "src": "contracts\\TestERC721.sol:32"
+          },
+          {
+            "label": "revealed",
+            "offset": 3,
+            "slot": "164",
+            "type": "t_bool",
             "contract": "TestERC721",
             "src": "contracts\\TestERC721.sol:33"
+          },
+          {
+            "label": "baseURI",
+            "offset": 0,
+            "slot": "165",
+            "type": "t_string_storage",
+            "contract": "TestERC721",
+            "src": "contracts\\TestERC721.sol:34"
+          },
+          {
+            "label": "royaltyBasisPoints",
+            "offset": 0,
+            "slot": "166",
+            "type": "t_uint96",
+            "contract": "TestERC721",
+            "src": "contracts\\TestERC721.sol:36"
           }
         ],
         "types": {
           "t_address": {
             "label": "address"
-          },
-          "t_array(t_uint256)42_storage": {
-            "label": "uint256[42]"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
@@ -255,6 +244,9 @@
           },
           "t_mapping(t_address,t_struct(AddressData)1418_storage)": {
             "label": "mapping(address => struct ERC721AUpgradeable.AddressData)"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
           },
           "t_mapping(t_uint256,t_address)": {
             "label": "mapping(uint256 => address)"
@@ -311,9 +303,9 @@
         }
       }
     },
-    "22c22ea2f0fb550f5eacfa4fc52f1f3b83e77495ebcec31a246fdce1544ebe88": {
-      "address": "0xB5AE3e2883934457cb593793f034b401867e1372",
-      "txHash": "0x293719cf0ab3507226df08524ba7bc0188be284156ed7b4ff44cd8c093d692bc",
+    "1e1626e6402593310cb3994e96275988b523b22139c0775e62db20a8343eab21": {
+      "address": "0xDD6e711b91B1F93190c0A05aDC2F04dC25FE9675",
+      "txHash": "0xb6dde5a5f343a14f99823d4393895b39c66e45019187a18c3ada18d34b740cb8",
       "layout": {
         "storage": [
           {
@@ -362,18 +354,18 @@
             "slot": "101",
             "type": "t_address",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:13"
+            "src": "contracts\\TestStaking.sol:12"
           },
           {
-            "label": "testERC1155Contract",
+            "label": "lockDuration",
             "offset": 0,
             "slot": "102",
-            "type": "t_address",
+            "type": "t_uint256",
             "contract": "TestStaking",
             "src": "contracts\\TestStaking.sol:14"
           },
           {
-            "label": "lockDuration",
+            "label": "passiveEmission",
             "offset": 0,
             "slot": "103",
             "type": "t_uint256",
@@ -381,7 +373,7 @@
             "src": "contracts\\TestStaking.sol:15"
           },
           {
-            "label": "passiveEmission",
+            "label": "activeEmission",
             "offset": 0,
             "slot": "104",
             "type": "t_uint256",
@@ -389,7 +381,7 @@
             "src": "contracts\\TestStaking.sol:16"
           },
           {
-            "label": "activeEmission",
+            "label": "lockEmission",
             "offset": 0,
             "slot": "105",
             "type": "t_uint256",
@@ -397,55 +389,55 @@
             "src": "contracts\\TestStaking.sol:17"
           },
           {
-            "label": "lockEmission",
-            "offset": 0,
-            "slot": "106",
-            "type": "t_uint256",
-            "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:18"
-          },
-          {
             "label": "admins",
             "offset": 0,
-            "slot": "107",
+            "slot": "106",
             "type": "t_mapping(t_address,t_bool)",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:20"
+            "src": "contracts\\TestStaking.sol:19"
           },
           {
             "label": "startTime",
             "offset": 0,
-            "slot": "108",
+            "slot": "107",
             "type": "t_uint256",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:35"
+            "src": "contracts\\TestStaking.sol:34"
           },
           {
             "label": "lastUpdates",
             "offset": 0,
-            "slot": "109",
-            "type": "t_mapping(t_address,t_struct(LastUpdate)3591_storage)",
+            "slot": "108",
+            "type": "t_mapping(t_address,t_struct(LastUpdate)3689_storage)",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:38"
+            "src": "contracts\\TestStaking.sol:37"
           },
           {
             "label": "rewards",
             "offset": 0,
-            "slot": "110",
-            "type": "t_mapping(t_address,t_struct(Reward)3598_storage)",
+            "slot": "109",
+            "type": "t_mapping(t_address,t_struct(Reward)3696_storage)",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:41"
+            "src": "contracts\\TestStaking.sol:40"
           },
           {
             "label": "passiveTokenProxies",
             "offset": 0,
-            "slot": "111",
+            "slot": "110",
             "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TestStaking",
+            "src": "contracts\\TestStaking.sol:43"
+          },
+          {
+            "label": "stakedActiveTokens",
+            "offset": 0,
+            "slot": "111",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
             "contract": "TestStaking",
             "src": "contracts\\TestStaking.sol:44"
           },
           {
-            "label": "stakedActiveTokens",
+            "label": "stakedLockTokens",
             "offset": 0,
             "slot": "112",
             "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
@@ -453,28 +445,12 @@
             "src": "contracts\\TestStaking.sol:45"
           },
           {
-            "label": "stakedLockTokens",
-            "offset": 0,
-            "slot": "113",
-            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
-            "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:46"
-          },
-          {
             "label": "stakedLockTokensTimestamps",
             "offset": 0,
-            "slot": "114",
+            "slot": "113",
             "type": "t_mapping(t_uint256,t_uint256)",
             "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:47"
-          },
-          {
-            "label": "timestamp1155",
-            "offset": 0,
-            "slot": "115",
-            "type": "t_uint256",
-            "contract": "TestStaking",
-            "src": "contracts\\TestStaking.sol:49"
+            "src": "contracts\\TestStaking.sol:46"
           }
         ],
         "types": {
@@ -499,10 +475,10 @@
           "t_mapping(t_address,t_bool)": {
             "label": "mapping(address => bool)"
           },
-          "t_mapping(t_address,t_struct(LastUpdate)3591_storage)": {
+          "t_mapping(t_address,t_struct(LastUpdate)3689_storage)": {
             "label": "mapping(address => struct TestStaking.LastUpdate)"
           },
-          "t_mapping(t_address,t_struct(Reward)3598_storage)": {
+          "t_mapping(t_address,t_struct(Reward)3696_storage)": {
             "label": "mapping(address => struct TestStaking.Reward)"
           },
           "t_mapping(t_address,t_uint256)": {
@@ -511,7 +487,7 @@
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"
           },
-          "t_struct(LastUpdate)3591_storage": {
+          "t_struct(LastUpdate)3689_storage": {
             "label": "struct TestStaking.LastUpdate",
             "members": [
               {
@@ -528,7 +504,7 @@
               }
             ]
           },
-          "t_struct(Reward)3598_storage": {
+          "t_struct(Reward)3696_storage": {
             "label": "struct TestStaking.Reward",
             "members": [
               {

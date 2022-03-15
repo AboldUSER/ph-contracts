@@ -16,19 +16,25 @@ async function main() {
   // const baseURI = "https://testnft.com/metadata/"; ///placeholder
   const signer = deployer.address; ///placeholder
 
-  const TestERC721 = await ethers.getContractFactory("TestERC721");
-  const testERC721 = await upgrades.deployProxy(TestERC721, [signer]);
+  // const TestERC721 = await ethers.getContractFactory("TestERC721");
+  // const testERC721 = await upgrades.deployProxy(TestERC721, [signer]);
 
-  await testERC721.deployed();
-  console.log("TestERC721 deployed to:", testERC721.address);
+  // await testERC721.deployed();
+  // console.log("TestERC721 deployed to:", testERC721.address);
 
-  const stakingStartTime = 1647210600 // Sunday, March 13, 2022 3:30:00 PM GMT-07:00 DST (California Time)
+  // const stakingStartTime = 1647210600 // Sunday, March 13, 2022 3:30:00 PM GMT-07:00 DST (California Time)
 
-  const TestStaking = await ethers.getContractFactory("TestStaking");
-  const testStaking = await upgrades.deployProxy(TestStaking, [testERC721.address, stakingStartTime])
+  // const TestStaking = await ethers.getContractFactory("TestStaking");
+  // const testStaking = await upgrades.deployProxy(TestStaking, [testERC721.address, stakingStartTime])
 
-  await testStaking.deployed();
-  console.log("TestStaking deployed to:", testStaking.address);
+  // await testStaking.deployed();
+  // console.log("TestStaking deployed to:", testStaking.address);
+
+  // const TestERC1155 = await ethers.getContractFactory("TestERC1155");
+  // const testERC1155 = await TestERC1155.deploy("test.uri", testStaking.address)
+
+  // await testERC1155.deployed();
+  // console.log("TestERC1155 deployed to:", testERC1155.address);
 
   // console.log('Waiting to verify...')
   // await new Promise((r) => setTimeout(r, 60000))
@@ -39,11 +45,17 @@ async function main() {
   // })
   // console.log('Verified testERC721')
 
+  await run('verify:verify', {
+    address: "0x0d486b0e2242081E5f0564CCA0B4aD13B59A8D9a",
+    // constructorArguments: [testERC721.address, stakingStartTime],
+  })
+  console.log('Verified testStaking')
+
   // await run('verify:verify', {
-  //   address: testStaking.address,
-  //   constructorArguments: [testERC721.address, stakingStartTime],
+  //   address: testERC1155.address,
+  //   constructorArguments: ["test.uri", testStaking.address],
   // })
-  // console.log('Verified testStaking')
+  // console.log('Verified testERC1155')
 
 }
 

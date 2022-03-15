@@ -14,7 +14,6 @@ describe('Papers Integration Tests', () => {
   let signer
   let testStaking
   let buyPrice
-  let presalePrice
 
   beforeEach(async () => {
     snapshotId = await ethers.provider.send('evm_snapshot')
@@ -42,8 +41,6 @@ describe('Papers Integration Tests', () => {
     await testERC721.setTestStaking(testStaking.address)
 
     buyPrice = await testERC721.MINT_PRICE()
-
-    presalePrice = await testERC721.PAPERLIST_MINT_PRICE()
   })
 
   describe('Token Setup', async () => {
@@ -57,8 +54,8 @@ describe('Papers Integration Tests', () => {
   describe('Mint presale', async () => {
     it('mintPresale success', async () => {
 
-      const userAquantity = 5
-      const userBquantity = 5
+      const userAquantity = 4
+      const userBquantity = 4
       const phPlus = true
       const stake = false
 
@@ -66,14 +63,14 @@ describe('Papers Integration Tests', () => {
 
       const userAsignedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await testERC721.connect(userA).presaleMint(userAquantity, phPlus, userAsignedMessage, stake, { value: presalePrice.mul(userAquantity) })
+      await testERC721.connect(userA).presaleMint(userAquantity, phPlus, userAsignedMessage, stake, { value: buyPrice.mul(userAquantity) })
       const userATokenBalance = await testERC721.balanceOf(userA.address)
       expect(userATokenBalance).to.equal(userAquantity)
       expect(await testERC721.totalSupply()).to.equal(userAquantity)
 
       const userBsignedMessage = await messageSigner.getSignedMessage(phPlus, userB.address, signer)
 
-      await testERC721.connect(userB).presaleMint(userBquantity, phPlus, userBsignedMessage, stake, { value: presalePrice.mul(userBquantity) })
+      await testERC721.connect(userB).presaleMint(userBquantity, phPlus, userBsignedMessage, stake, { value: buyPrice.mul(userBquantity) })
       const userBTokenBalance = await testERC721.balanceOf(userB.address)
       expect(userBTokenBalance).to.equal(userBquantity)
       expect(await testERC721.totalSupply()).to.equal(userAquantity + userBquantity)
@@ -89,12 +86,12 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
+      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
     })
 
     it('mintPresale error message already used', async () => {
 
-      const quantity = 5
+      const quantity = 4
       const phPlus = true
       const stake = false
 
@@ -102,16 +99,16 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity) })
+      await testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity) })
 
       const secondsignedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userA).presaleMint(1, phPlus, secondsignedMessage, stake, { value: presalePrice.mul(quantity) })).to.be.revertedWith('ALREADY_MINTED')
+      await expect(testERC721.connect(userA).presaleMint(1, phPlus, secondsignedMessage, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
     })
 
     it('mintPresale error wrong value input', async () => {
 
-      const quantity = 5
+      const quantity = 4
       const phPlus = true
       const stake = false
 
@@ -119,12 +116,12 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity).sub(1) })).to.be.revertedWith('INSUFFICIENT_ETH')
+      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity).sub(1) })).to.be.revertedWith('INVALID_ETH')
     })
 
     it('mintPresale error wrong sender', async () => {
 
-      const quantity = 5
+      const quantity = 4
       const phPlus = true
       const stake = false
 
@@ -132,12 +129,12 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userB).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity) })).to.be.revertedWith('UNAUTHORIZED')
+      await expect(testERC721.connect(userB).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('UNAUTHORIZED')
     })
 
     it('mintPresale error when minting phPlus during regular presale', async () => {
 
-      const quantity = 5
+      const quantity = 4
       const phPlus = true
       const stake = false
 
@@ -145,12 +142,12 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
+      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
     })
 
     it('mintPresale error when minting regular presale user during phPlus presale', async () => {
 
-      const quantity = 5
+      const quantity = 4
       const phPlus = false
       const stake = false
 
@@ -158,14 +155,14 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: presalePrice.mul(quantity) })).to.be.revertedWith('TOO_EARLY')
+      await expect(testERC721.connect(userA).presaleMint(quantity, phPlus, signedMessage, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('TOO_EARLY')
     })
   })
 
   describe('Mint sale', async () => {
     it('mint nft success', async () => {
 
-      const quantity = 3
+      const quantity = 2
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
@@ -173,11 +170,9 @@ describe('Papers Integration Tests', () => {
 
       const ownerAddress1 = await testERC721.ownerOf(quantity - 1)
       const ownerAddress2 = await testERC721.ownerOf(quantity - 2)
-      const ownerAddress3 = await testERC721.ownerOf(quantity - 3)
       await expect(testERC721.ownerOf(quantity)).to.be.revertedWith('OwnerQueryForNonexistentToken()')
       expect(ownerAddress1).to.equal(userA.address)
       expect(ownerAddress2).to.equal(userA.address)
-      expect(ownerAddress3).to.equal(userA.address)
 
       const userATokenBalance = await testERC721.balanceOf(userA.address)
       expect(userATokenBalance).to.equal(quantity)
@@ -186,8 +181,9 @@ describe('Papers Integration Tests', () => {
 
     it('mint presale and regular sale success', async () => {
 
-      const presaleQuantity = 5
-      const quantity = 3
+      const presaleQuantity = 4
+      const quantity = 2
+      const addiQuantity = 1
       const phPlus = true
       const stake = false
 
@@ -195,12 +191,12 @@ describe('Papers Integration Tests', () => {
 
       const signedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await testERC721.connect(userA).presaleMint(presaleQuantity, phPlus, signedMessage, stake, { value: presalePrice.mul(presaleQuantity) })
+      await testERC721.connect(userA).presaleMint(presaleQuantity, phPlus, signedMessage, stake, { value: buyPrice.mul(presaleQuantity) })
 
       await testERC721.connect(deployer).toggleSale()
       await testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity) })
 
-      await expect(testERC721.connect(userA).mint(1, stake, { value: buyPrice.mul(1) })).to.be.revertedWith('INVALID_QUANTITY')
+      testERC721.connect(userA).mint(addiQuantity, stake, { value: buyPrice.mul(1) })
 
       const ownerAddress1 = await testERC721.ownerOf(0)
       const ownerAddress2 = await testERC721.ownerOf(1)
@@ -209,8 +205,7 @@ describe('Papers Integration Tests', () => {
       const ownerAddress5 = await testERC721.ownerOf(4)
       const ownerAddress6 = await testERC721.ownerOf(5)
       const ownerAddress7 = await testERC721.ownerOf(6)
-      const ownerAddress8 = await testERC721.ownerOf(7)
-      await expect(testERC721.ownerOf(8)).to.be.revertedWith('OwnerQueryForNonexistentToken()')
+      await expect(testERC721.ownerOf(7)).to.be.revertedWith('OwnerQueryForNonexistentToken()')
       expect(ownerAddress1).to.equal(userA.address)
       expect(ownerAddress2).to.equal(userA.address)
       expect(ownerAddress3).to.equal(userA.address)
@@ -218,16 +213,15 @@ describe('Papers Integration Tests', () => {
       expect(ownerAddress5).to.equal(userA.address)
       expect(ownerAddress6).to.equal(userA.address)
       expect(ownerAddress7).to.equal(userA.address)
-      expect(ownerAddress8).to.equal(userA.address)
 
       const userATokenBalance = await testERC721.balanceOf(userA.address)
-      expect(userATokenBalance).to.equal(presaleQuantity + quantity)
-      expect(await testERC721.totalSupply()).to.equal(presaleQuantity + quantity)
+      expect(userATokenBalance).to.equal(presaleQuantity + quantity + addiQuantity)
+      expect(await testERC721.totalSupply()).to.equal(presaleQuantity + quantity + addiQuantity)
     })
 
     it('mint sale error exceed quantity', async () => {
 
-      const quantity = 4
+      const quantity = 3
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
@@ -240,16 +234,16 @@ describe('Papers Integration Tests', () => {
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
-      await expect(testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('INVALID_QUANTITY')
+      await expect(testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity) })).to.be.revertedWith('MintZeroQuantity()')
     })
 
     it('mint sale error insufficient funds', async () => {
 
-      const quantity = 3
+      const quantity = 2
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
-      await expect(testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity).sub(1) })).to.be.revertedWith('INSUFFICIENT_ETH')
+      await expect(testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity).sub(1) })).to.be.revertedWith('INVALID_ETH')
     })
   })
 
@@ -302,7 +296,7 @@ describe('Papers Integration Tests', () => {
   describe('NFT stake', async () => {
     it('nft active success', async () => {
 
-      const quantity = 3
+      const quantity = 2
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
@@ -312,7 +306,7 @@ describe('Papers Integration Tests', () => {
       const blockTransfer0 = await ethers.provider.getBlock()
       await ethers.provider.send('evm_mine', [blockTransfer0.timestamp + 86393])
 
-      await expect(testStaking.connect(userA).stakeActive(userA.address, [0,2])).to.emit(testStaking, 'Stake')
+      await expect(testStaking.connect(userA).stakeActive(userA.address, [0,1])).to.emit(testStaking, 'Stake')
 
       const blockTransfer1 = await ethers.provider.getBlock()
       await ethers.provider.send('evm_mine', [blockTransfer1.timestamp + 86400])
@@ -330,7 +324,7 @@ describe('Papers Integration Tests', () => {
 
     it('nft lock success', async () => {
 
-      const quantity = 3
+      const quantity = 2
       const stake = false
 
       await testERC721.connect(deployer).toggleSale()
@@ -338,10 +332,10 @@ describe('Papers Integration Tests', () => {
       await testERC721.connect(userA).mint(quantity, stake, { value: buyPrice.mul(quantity) })
       await testERC721.connect(userA).setApprovalForAll(testStaking.address, true)
       const blockTransfer0 = await ethers.provider.getBlock()
-      await testStaking.connect(userA).stakeLock(userA.address, [0,1])
+      await testStaking.connect(userA).stakeLock(userA.address, [0])
       const blockTransfer1 = await ethers.provider.getBlock()
       await ethers.provider.send('evm_mine', [blockTransfer1.timestamp + 259200])
-      await testStaking.connect(userA).stakeLock(userA.address, [2])
+      await testStaking.connect(userA).stakeLock(userA.address, [1])
       const userARewards = await testStaking.viewAllRewards(userA.address)
       await expect(testStaking.connect(userA).withdrawLock()).to.be.revertedWith("NO_UNLOCKED")
       await ethers.provider.send('evm_mine', [blockTransfer1.timestamp + (86400 * 60)])
@@ -361,7 +355,7 @@ describe('Papers Integration Tests', () => {
 
       await testERC721.connect(deployer).releaseReserve(deployer.address, 1)
 
-      const userAquantity = 5
+      const userAquantity = 4
       const phPlus = true
       const stake = true
 
@@ -369,7 +363,7 @@ describe('Papers Integration Tests', () => {
 
       const userAsignedMessage = await messageSigner.getSignedMessage(phPlus, userA.address, signer)
 
-      await testERC721.connect(userA).presaleMint(userAquantity, phPlus, userAsignedMessage, stake, { value: presalePrice.mul(userAquantity) })
+      await testERC721.connect(userA).presaleMint(userAquantity, phPlus, userAsignedMessage, stake, { value: buyPrice.mul(userAquantity) })
       const blockTransfer1 = await ethers.provider.getBlock()
 
       const userAstakedLockTokens = await testStaking.viewLockTokens(userA.address)
@@ -382,7 +376,7 @@ describe('Papers Integration Tests', () => {
       const userAtokenBalance = await testERC721.balanceOf(userA.address)
       expect(userAtokenBalance).to.equal(userAquantity)
 
-      const userBquantity = 3
+      const userBquantity = 2
 
       await testERC721.connect(deployer).toggleSale()
 

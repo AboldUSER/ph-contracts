@@ -5,12 +5,13 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradea
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "./interfaces/ITestERC721.sol";
+import "./interfaces/ITestERC1155.sol";
 
 // import "hardhat/console.sol";
 
 contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
     address public testERC721Contract;
-    uint256 private constant INTERVAL = 86400;
+    address public testERC1155Contract;
     uint256 public lockDuration;
     uint256 public passiveEmission;
     uint256 public activeEmission;
@@ -45,6 +46,9 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
     mapping(address => uint256[]) public stakedLockTokens;
     mapping(uint256 => uint256) public stakedLockTokensTimestamps;
 
+    uint256 public timestamp1155;
+    uint256 private constant INTERVAL = 86400;
+
     event Stake(
         address indexed user,
         uint256[] indexed tokenIDs,
@@ -60,10 +64,10 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
         __Ownable_init();
         testERC721Contract = _testERC721Contract;
         startTime = _startTime;
-        lockDuration = 86400 * 60;
+        lockDuration = 86400 * 56;
         passiveEmission = 100 ether;
         activeEmission = 200 ether;
-        lockEmission = 400 ether;
+        lockEmission = 800 ether;
     }
 
     /**
@@ -92,6 +96,14 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
     function removeAdmin(address _admin) external onlyOwner {
         require(admins[_admin] == true, "ADMIN_NOT_SET");
         admins[_admin] = false;
+    }
+
+    function setTimestamp1155(uint256 _timestamp1155) external onlyOwner {
+        timestamp1155 = _timestamp1155;
+    }
+
+    function setAddress1155(address _address1155) external onlyOwner {
+        testERC1155Contract = _address1155;
     }
 
     function setPassiveEmission(uint256 _passiveEmission) external onlyOwner {
@@ -183,6 +195,7 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
         lastUpdates[msg.sender].active = block.timestamp;
         uint256 arrLen = stakedActiveTokens[msg.sender]
             .length;
+        require(arrLen > 0, "NO_ACTIVE_STAKE");
         uint256[] memory tokenIds = new uint256[](arrLen);
         tokenIds = stakedActiveTokens[msg.sender];
         ITestERC721(testERC721Contract).batchSafeTransferFrom(
@@ -212,6 +225,12 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
             ""
         );
         passiveTokenProxies[owner] += tokenIds.length;
+        if (block.timestamp <= timestamp1155) {
+            uint256 quantity = tokenIds.length / 2;
+            if (quantity > 0) {
+            ITestERC1155(testERC1155Contract).mint(owner,quantity);
+            }
+        }
         emit Stake(owner, tokenIds, true);
     }
 
@@ -331,12 +350,12 @@ contract TestStaking is Initializable, OwnableUpgradeable, IERC721ReceiverUpgrad
     }
 
     function transferRewards(address _from, address _to) external multiAdmin {
-        if (_from != address(0) && _from != address(this) /*&& !admins[msg.sender]*/) {
+        if (_from != address(0) && _from != address(this)) {
             rewards[_from].passive += _getPassivePendingReward(_from);
             lastUpdates[_from].passive = block.timestamp;
         }
 
-        if (_to != address(0) && _to != address(this) /*&& !admins[msg.sender]*/) {
+        if (_to != address(0) && _to != address(this)) {
             rewards[_to].passive += _getPassivePendingReward(_to);
             lastUpdates[_to].passive = block.timestamp;
         }

@@ -45,11 +45,11 @@ module.exports = {
       url: 'http://127.0.0.1:7545',
       timeout: 1000000,
     },
-    // rinkeby: {
-    //   url: 'https://rinkeby.infura.io/v3/' + process.env.INFURA_API_KEY,
-    //   accounts: [`0x` + process.env.PRIVATE_KEY],
-    //   timeout: 1000000,
-    // },
+    rinkeby: {
+      url: 'https://rinkeby.infura.io/v3/' + process.env.INFURA_API_KEY,
+      accounts: [`0x` + process.env.PRIVATE_KEY],
+      timeout: 1000000,
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== false,
